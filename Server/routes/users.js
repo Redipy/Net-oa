@@ -4,11 +4,11 @@ var router = express.Router();
 let db = require("../service/db")
 
 router.post('/login', function (req, res, next) {
-  let sql = "select * from user where user_name = '" + req.body.user_name + "' and user_password = '" + req.body.password + "'"
+  let sql = "select * from user where user_loginname = '" + req.body.user_name + "' and user_password = '" + req.body.password + "'"
   db.query(sql, (err, rows) => {
     if (err) {
       res.json({
-        err: "chucuole"
+        err: err
       })
     } else {
       if (rows.length != 0) {

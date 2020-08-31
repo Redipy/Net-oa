@@ -143,25 +143,44 @@ export default {
               user_name: this.ruleForm.username,
               password: this.ruleForm.password
             })
-              .then(function (res) {
-                console.log(res)
-                if (res.data === 1) {
-                  self.$message.error('用户名或密码错误')
-                } else if (res.data === 0) {
-                  let user = {
-                    user_id: res.info.user_id,
-                    user_name: res.info.user_name
+              .then(
+                res => {
+                  console.log(res)
+                  if (res.data === 1) {
+                    self.$message.error('用户名或密码错误')
+                  } else if (res.data === 0) {
+                    let user = {
+                      user_id: res.info.user_id,
+                      user_role: res.info.user_role
+                    }
+                    sessionStorage.setItem('EX_token', JSON.stringify(user))
+                    self.$router.push('/')
                   }
-                  sessionStorage.setItem('EX_token', JSON.stringify(user))
-                  console.log(sessionStorage.getItem('EX_token'))
-                  self.$router.push('/')
+                  self.loading = false
                 }
-                self.loading = false
-              })
-              .catch(res => {
-                console.log(res)
-                self.loading = false
-              })
+              ).catch(
+                err => {
+                  console.log(err)
+                })
+            // .then(function (res) {
+            //   console.log(res)
+            //   if (res.data === 1) {
+            //     self.$message.error('用户名或密码错误')
+            //   } else if (res.data === 0) {
+            //     let user = {
+            //       user_id: res.info.user_id,
+            //       user_name: res.info.user_name
+            //     }
+            //     sessionStorage.setItem('EX_token', JSON.stringify(user))
+            //     console.log(sessionStorage.getItem('EX_token'))
+            //     self.$router.push('/')
+            //   }
+            //   self.loading = false
+            // })
+            // .catch(res => {
+            //   console.log(res)
+            //   self.loading = false
+            // })
           }
         } else if (formName === 'regForm') {
           if (!valid) {
